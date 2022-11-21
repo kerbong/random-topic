@@ -2,7 +2,6 @@ import React from "react";
 import styled from "styled-components";
 
 const Button = styled.button`
-  display: inline-block;
   background-color: #00d495;
   font-size: 2rem;
   margin: 1rem;
