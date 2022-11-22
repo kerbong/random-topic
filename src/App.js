@@ -2,12 +2,12 @@ import "./App.css";
 import SelectLoginType from "./component/Login/SelectLoginType";
 import { Routes, Route } from "react-router-dom";
 import { useState, useEffect } from "react";
-import { doc, onSnapshot } from "firebase/firestore";
-import { dbService } from "./fbase";
+
 import { authService } from "./fbase";
 import RandomTopic from "./component/RandomTopic/RandomTopic";
 
 function App() {
+  const [init, setInit] = useState(false);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [userUid, setUserUid] = useState(null);
   const [userEmail, setUserEmail] = useState(null);
@@ -19,33 +19,20 @@ function App() {
         if (user) {
           setUserEmail(user.email.split("@")[0]);
           setUserUid(user.uid);
-          getTopics(user.email.split("@")[0]);
+
           setIsLoggedIn(true);
         } else {
           setIsLoggedIn(false);
         }
+        setInit(true);
       });
     } catch (error) {
       console.log(error);
     }
   }, []);
 
-  //저장된 학생명부 불러오는 snapshot 함수
-  //참고 https://firebase.google.com/docs/firestore/query-data/listen?hl=ko
-  const getTopics = async (email) => {
-    //db에서 studnets 콜렉션 DB가져오고 doc id가 현재 유저인 doc 가져오기
-    const docRef = doc(dbService, "topic", email);
-    onSnapshot(docRef, (doc) => {
-      if (doc.exists()) {
-        setTopics([...doc.data().datas]);
-        console.log([...doc.data().datas]);
-      } else {
-        setTopics([]);
-      }
-    });
-  };
-
   const logOutHandler = () => {
+    setInit(false);
     setIsLoggedIn(false);
     setUserUid(null);
     setTopics([]);
@@ -54,9 +41,7 @@ function App() {
   return (
     <div className="App">
       <Routes>
-        {!isLoggedIn && <Route index element={<SelectLoginType />} />}
-
-        {isLoggedIn && (
+        {init && isLoggedIn ? (
           <Route
             index
             element={
@@ -64,9 +49,12 @@ function App() {
                 topics={topics}
                 userUid={userUid}
                 userEmail={userEmail}
+                logOutHandler={logOutHandler}
               />
             }
           />
+        ) : (
+          <Route index element={<SelectLoginType />} />
         )}
       </Routes>
     </div>

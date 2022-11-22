@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import LoginForm from "./LoginForm";
 import SelectTypeBtn from "./SelectTypeBtn";
-import AccessForm from "./AccessForm";
+import RandomTopic from "../RandomTopic/RandomTopic";
 
 const SelectLoginType = (props) => {
   const [loginType, setLoginType] = useState("");
@@ -21,13 +21,7 @@ const SelectLoginType = (props) => {
           }}
         />
       )}
-      {loginType === "student" && (
-        <AccessForm
-          loginTypeHandler={(type) => {
-            setLoginType(type);
-          }}
-        />
-      )}
+      {loginType === "student" && <RandomTopic />}
     </div>
   );
 };

@@ -40,8 +40,8 @@ const LoginDiv = styled.div`
 `;
 
 const LoginForm = (props) => {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+  //   const [email, setEmail] = useState("");
+  //   const [password, setPassword] = useState("");
   const [isTeacher, setIsTeacher] = useState("");
 
   const isTeacherChecker = (e) => {
@@ -49,7 +49,7 @@ const LoginForm = (props) => {
     let inputValue = teacherCheckRef.current.value;
     if (inputValue === "from-indi") {
       alert("환영합니다! 구글 연동 로그인이 가능합니다!");
-
+      localStorage.setItem("isTeacher", inputValue);
       setIsTeacher(inputValue);
     } else {
       alert("접속 비밀번호를 다시 확인해주세요!");
