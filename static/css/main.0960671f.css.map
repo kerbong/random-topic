@@ -1,0 +1,1 @@
+{"version":3,"file":"static/css/main.0960671f.css","mappings":"AAAA,EACE,uCAA2C,CAC3C,QACF,CAEA,KACE,iBACF","sources":["App.css"],"sourcesContent":["* {\r\n  font-family: \"IBM Plex Sans KR\", sans-serif;\r\n  margin: 0;\r\n}\r\n\r\n.App {\r\n  text-align: center;\r\n}\r\n"],"names":[],"sourceRoot":""}
