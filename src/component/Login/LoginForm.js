@@ -9,6 +9,7 @@ import {
   signInWithRedirect,
 } from "firebase/auth";
 import { authService } from "../../fbase";
+import Swal from "sweetalert2";
 
 const Input = styled.input`
   padding: 1rem;
@@ -48,7 +49,13 @@ const LoginForm = (props) => {
     e.preventDefault();
     let inputValue = teacherCheckRef.current.value;
     if (inputValue === "from-indi") {
-      alert("환영합니다! 구글 연동 로그인이 가능합니다!");
+      Swal.fire({
+        icon: "success",
+        title: "환영합니다!",
+        text: "구글 연동 로그인이 가능합니다!",
+        showConfirmButton: true,
+        timer: 5000,
+      });
       localStorage.setItem("isTeacher", inputValue);
       setIsTeacher(inputValue);
     } else {
@@ -84,11 +91,23 @@ const LoginForm = (props) => {
         ) {
           // PC 상의 모바일 에뮬레이터
           // console.log("mobile on pc");
-          await signInWithPopup(authService, provider);
+          await signInWithPopup(authService, provider)
+            .then((result) => {
+              props.loggedIn(result.user);
+            })
+            .catch((error) => {
+              console.log(error.code);
+            });
         } else {
           // pc 접속인 경우
           // console.log("pc");
-          await signInWithPopup(authService, provider);
+          await signInWithPopup(authService, provider)
+            .then((result) => {
+              props.loggedIn();
+            })
+            .catch((error) => {
+              console.log(error.code);
+            });
         }
       }
     }

@@ -370,6 +370,13 @@ const RandomTopic = (props) => {
         가지를
         <Button onclick={randomHandler}>랜덤뽑기</Button>
       </GettopicForm>
+      <Button
+        onClick={() => {
+          props.gotoMain();
+        }}
+      >
+        초기화면
+      </Button>
       <ResultUl>
         {picked?.map((picked) => (
           <ResultLi key={picked.num}>

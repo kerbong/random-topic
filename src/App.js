@@ -2,7 +2,7 @@ import "./App.css";
 import SelectLoginType from "./component/Login/SelectLoginType";
 import { Routes, Route } from "react-router-dom";
 import { useState, useEffect } from "react";
-
+import { getAuth, signOut } from "firebase/auth";
 import { authService } from "./fbase";
 import RandomTopic from "./component/RandomTopic/RandomTopic";
 
@@ -38,6 +38,13 @@ function App() {
     setTopics([]);
   };
 
+  const loggedInHandler = (user) => {
+    setUserEmail(user.email.split("@")[0]);
+    setUserUid(user.uid);
+    setIsLoggedIn(true);
+    setInit(true);
+  };
+
   return (
     <div className="App">
       <Routes>
@@ -50,11 +57,28 @@ function App() {
                 userUid={userUid}
                 userEmail={userEmail}
                 logOutHandler={logOutHandler}
+                gotoMain={() => {
+                  const auth = getAuth();
+                  signOut(auth);
+                  logOutHandler();
+                }}
               />
             }
           />
         ) : (
-          <Route index element={<SelectLoginType />} />
+          <Route
+            index
+            element={
+              <SelectLoginType
+                loggedIn={(user) => loggedInHandler(user)}
+                gotoMain={() => {
+                  const auth = getAuth();
+                  signOut(auth);
+                  logOutHandler();
+                }}
+              />
+            }
+          />
         )}
       </Routes>
     </div>

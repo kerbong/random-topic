@@ -19,9 +19,15 @@ const SelectLoginType = (props) => {
           loginTypeHandler={(type) => {
             setLoginType(type);
           }}
+          loggedIn={(user) => {
+            props.loggedIn(user);
+          }}
+          gotoMain={() => props.gotoMain()}
         />
       )}
-      {loginType === "student" && <RandomTopic />}
+      {loginType === "student" && (
+        <RandomTopic gotoMain={() => props.gotoMain()} />
+      )}
     </div>
   );
 };
