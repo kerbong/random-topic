@@ -145,7 +145,9 @@ const RandomTopic = (props) => {
 
   useEffect(() => {
     //데이터베이스에서 자료이름들 찾아보고 저장해두기
-    findLabelPossible();
+    if (props.userUid !== "") {
+      findLabelPossible();
+    }
   }, []);
 
   //테마선택 버튼 누르면 테마 주제들 가져오기
@@ -370,13 +372,6 @@ const RandomTopic = (props) => {
         가지를
         <Button onclick={randomHandler}>랜덤뽑기</Button>
       </GettopicForm>
-      <Button
-        onClick={() => {
-          props.gotoMain();
-        }}
-      >
-        초기화면
-      </Button>
       <ResultUl>
         {picked?.map((picked) => (
           <ResultLi key={picked.num}>

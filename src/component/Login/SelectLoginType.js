@@ -22,12 +22,9 @@ const SelectLoginType = (props) => {
           loggedIn={(user) => {
             props.loggedIn(user);
           }}
-          gotoMain={() => props.gotoMain()}
         />
       )}
-      {loginType === "student" && (
-        <RandomTopic gotoMain={() => props.gotoMain()} />
-      )}
+      {loginType === "student" && <RandomTopic userUid={""} />}
     </div>
   );
 };

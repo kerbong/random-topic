@@ -56,8 +56,7 @@ function App() {
                 topics={topics}
                 userUid={userUid}
                 userEmail={userEmail}
-                logOutHandler={logOutHandler}
-                gotoMain={() => {
+                logOutHandler={() => {
                   const auth = getAuth();
                   signOut(auth);
                   logOutHandler();
@@ -69,14 +68,7 @@ function App() {
           <Route
             index
             element={
-              <SelectLoginType
-                loggedIn={(user) => loggedInHandler(user)}
-                gotoMain={() => {
-                  const auth = getAuth();
-                  signOut(auth);
-                  logOutHandler();
-                }}
-              />
+              <SelectLoginType loggedIn={(user) => loggedInHandler(user)} />
             }
           />
         )}
